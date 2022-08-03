@@ -10,6 +10,10 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signIn } from "../../auth/firebase";
+import { AuthContext } from "../../auth/AuthContext";
 
 function Copyright(props) {
   return (
@@ -30,8 +34,14 @@ function Copyright(props) {
 }
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { currentUser } = useContext(AuthContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    signIn(email, password, navigate);
   };
 
   return (
@@ -61,6 +71,7 @@ const Login = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -71,6 +82,7 @@ const Login = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(e) => setPassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
