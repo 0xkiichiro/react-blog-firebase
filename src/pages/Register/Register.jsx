@@ -11,6 +11,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import theme from "../../theme/theme";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createUser } from "../../auth/firebase";
 
 function Copyright(props) {
   return (
@@ -31,13 +34,17 @@ function Copyright(props) {
 }
 
 const Register = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const displayName = `${firstName} ${lastName}`;
+    console.log(email, password);
+    createUser(email, password, navigate, displayName);
   };
 
   return (
@@ -68,6 +75,7 @@ const Register = () => {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -78,6 +86,7 @@ const Register = () => {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
+                onChange={(e) => setLastName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -88,6 +97,7 @@ const Register = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -99,6 +109,7 @@ const Register = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>

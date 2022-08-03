@@ -1,6 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -15,3 +20,23 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+const auth = getAuth();
+
+export const createUser = async (email, password, navigate, displayName) => {
+  try {
+    let userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    //? kullanıcı profilini güncellemek için kullanılan firebase metodu
+    await updateProfile(auth.currentUser, {
+      displayName: displayName,
+    });
+    navigate("/");
+    console.log(userCredential);
+  } catch (err) {
+    console.log(err);
+  }
+};
