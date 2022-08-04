@@ -10,7 +10,6 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <AuthContextProvider>
-          {/* <Navbar /> */}
           <AppRouter />
         </AuthContextProvider>
       </ThemeProvider>

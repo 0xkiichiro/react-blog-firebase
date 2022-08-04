@@ -77,11 +77,9 @@ export const userObserver = (setCurrUser) => {
   //? firebase method that tracks if the user is logged in or not and returns a response
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log(user);
       setCurrUser(user);
     } else {
-      // User is signed out
-      // ...
+      setCurrUser(false);
     }
   });
 };

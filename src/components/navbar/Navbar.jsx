@@ -39,7 +39,11 @@ const Navbar = () => {
         sx={{ backgroundColor: theme.colors.navBgColor }}
       >
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, textAlign: "left" }}
+          >
             <Link to="/">JoJo Blog</Link>
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
