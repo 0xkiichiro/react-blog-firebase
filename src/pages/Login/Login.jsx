@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signIn } from "../../auth/firebase";
+import { signIn, signUpProvider } from "../../auth/firebase";
 import { AuthContext } from "../../auth/AuthContext";
 
 function Copyright(props) {
@@ -84,29 +84,28 @@ const Login = () => {
             autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Login
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            sx={{ mb: 2 }}
+            onClick={() => signUpProvider(navigate)}
+          >
+            Login with Google
+          </Button>
+
+          <Grid item xs>
+            {/* <Link to="register" variant="body2">
+              Don't have an account? Sign Up
+            </Link> */}
           </Grid>
         </Box>
       </Box>

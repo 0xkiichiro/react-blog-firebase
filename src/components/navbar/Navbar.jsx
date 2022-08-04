@@ -4,21 +4,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import theme from "../../theme/theme";
+import { AuthContext } from "../../auth/AuthContext";
+import { logOut } from "../../auth/firebase";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
+  const { currUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,29 +24,26 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    handleClose();
+    logOut(navigate);
+  };
+
+  useEffect(() => {}, [currUser]);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup>
       <AppBar
         position="static"
         sx={{ backgroundColor: theme.colors.navBgColor }}
       >
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            JoJo Blog
+            <Link to="/">JoJo Blog</Link>
           </Typography>
-          <div>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            {currUser && <Typography>{currUser.displayName}</Typography>}
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -75,9 +69,18 @@ const Navbar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              {currUser ? (
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              ) : (
+                <div>
+                  <MenuItem onClick={() => navigate("/login")}>Login</MenuItem>
+                  <MenuItem onClick={() => navigate("/register")}>
+                    Register
+                  </MenuItem>
+                </div>
+              )}
             </Menu>
-          </div>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

@@ -8,6 +8,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -73,7 +74,7 @@ export const signUpProvider = async (navigate) => {
 };
 
 export const userObserver = (setCurrUser) => {
-  //? Firebase method that tracks if the user is logged in or not and returns a response
+  //? firebase method that tracks if the user is logged in or not and returns a response
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log(user);
@@ -83,4 +84,10 @@ export const userObserver = (setCurrUser) => {
       // ...
     }
   });
+};
+
+export const logOut = (navigate) => {
+  //? firebase method to logout
+  signOut(auth);
+  navigate("/");
 };
