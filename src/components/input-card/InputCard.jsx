@@ -1,8 +1,9 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Container, TextareaAutosize, TextField } from "@mui/material";
+import { Container, TextField } from "@mui/material";
 import { useState } from "react";
+import { addBlogPost } from "../../auth/firebase";
 
 const InputCard = ({ post, setPost, postArr, setPostArr }) => {
   const [title, setTitle] = useState("");
@@ -15,10 +16,12 @@ const InputCard = ({ post, setPost, postArr, setPostArr }) => {
       (post.title = title),
       (post.imgUrl = imgUrl),
       (post.content = content),
-      (post.postTime = new Date().getTime())
+      (post.postTime = new Date().getDate()),
+      (post.blogId = new Date().getTime())
     );
     console.log(post);
     setPostArr([post, ...postArr]);
+    addBlogPost(post);
     console.log(postArr);
     setPost({
       title: "",

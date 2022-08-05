@@ -10,6 +10,8 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
+import { getDatabase, ref, set, onValue } from "firebase/database";
+import { useEffect, useState } from "react";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -88,4 +90,39 @@ export const logOut = (navigate) => {
   //? firebase method to logout
   signOut(auth);
   navigate("/");
+};
+
+//* firebase realtime database functions
+
+const database = getDatabase();
+
+export const addBlogPost = (post) => {
+  const db = getDatabase();
+  set(ref(db, "blog/" + post.blogId), {
+    title: post.title,
+    imgUrl: post.imgUrl,
+    content: post.content,
+    postTime: post.postTime,
+  });
+};
+
+export const useFetchBlogPosts = () => {
+  const [loading, setLoading] = useState(true);
+  const [fetchedBlogs, setFetchedBlogs] = useState();
+
+  useEffect(() => {
+    const db = getDatabase();
+    const blogPostRef = ref(db, "blog");
+    onValue(blogPostRef, (snapshot) => {
+      const data = snapshot.val();
+      const blogPostArr = [];
+
+      for (let id in data) {
+        blogPostArr.push({ id, ...data[id] });
+      }
+      setFetchedBlogs(blogPostArr);
+      setLoading(false);
+    });
+  }, []);
+  return { loading, fetchedBlogs };
 };
