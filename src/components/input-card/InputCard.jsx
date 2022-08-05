@@ -19,10 +19,10 @@ const InputCard = ({ post, setPost, postArr, setPostArr }) => {
       (post.postTime = new Date().getDate()),
       (post.blogId = new Date().getTime())
     );
-    console.log(post);
-    setPostArr([post, ...postArr]);
+    // console.log(post);
+    // setPostArr([post, ...postArr]);
     addBlogPost(post);
-    console.log(postArr);
+    // console.log(postArr);
     setPost({
       title: "",
       imgUrl: "",

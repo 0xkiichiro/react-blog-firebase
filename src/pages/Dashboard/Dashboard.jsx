@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../auth/AuthContext";
+import { useFetchBlogPosts } from "../../auth/firebase";
 import BlogCard from "../../components/card/BlogCard";
 import InputCard from "../../components/input-card/InputCard";
 
@@ -12,8 +13,11 @@ const Dashboard = () => {
     content: "",
     postTime: "",
   });
-  const [postArr, setPostArr] = useState([]);
-
+  const [postArr, setPostArr] = useState();
+  const { loading, fetchedBlogs } = useFetchBlogPosts();
+  console.log(loading);
+  console.log(fetchedBlogs);
+  // setPostArr(fetchedBlogs);
   return (
     <div>
       {currUser && (
@@ -22,12 +26,11 @@ const Dashboard = () => {
           <InputCard
             post={post}
             setPost={setPost}
-            postArr={postArr}
-            setPostArr={setPostArr}
+            // postArr={postArr}
+            // setPostArr={setPostArr}
           />
         </>
       )}
-      {/* <BlogCard /> */}
       <Box
         sx={{
           mt: 3,
@@ -37,7 +40,7 @@ const Dashboard = () => {
         }}
         style={{ gap: "2rem", textAlign: "center" }}
       >
-        {postArr?.map((item, index) => (
+        {fetchedBlogs?.map((item, index) => (
           <BlogCard key={index} item={item} />
         ))}
       </Box>
