@@ -44,7 +44,16 @@ const Navbar = () => {
             component="div"
             sx={{ flexGrow: 1, textAlign: "left" }}
           >
-            <Link to="/">JoJo Blog</Link>
+            <Link
+              to="/"
+              style={{
+                color: "white",
+                fontWeight: "bold",
+                textDecoration: "none",
+              }}
+            >
+              JoJo Blog
+            </Link>
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {currUser && <Typography>{currUser.displayName}</Typography>}

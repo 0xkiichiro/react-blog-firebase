@@ -11,10 +11,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { handleDelete, handleLike } from "../../auth/firebase";
-let liked = false;
+import { useNavigate } from "react-router-dom";
 
+let liked = false;
 const BlogCard = ({ item }) => {
   // console.log(item);
+  const navigate = useNavigate();
   const { currUser } = useContext(AuthContext);
   const [color, setColor] = useState("gray");
 
@@ -51,7 +53,11 @@ const BlogCard = ({ item }) => {
           )}
         </IconButton>
         <IconButton aria-label="share">
-          <CommentIcon />{" "}
+          <CommentIcon
+            onClick={() =>
+              navigate(`/details/${item.id}`, { state: item, liked })
+            }
+          />{" "}
           {item.comments && (
             <Typography sx={{ marginLeft: "4px", fontWeight: "bold" }}>
               {item.comments}
