@@ -6,13 +6,30 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
+import CommentIcon from "@mui/icons-material/Comment";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import { handleDelete, handleLike } from "../../auth/firebase";
+let liked = false;
 
 const BlogCard = ({ item }) => {
-  console.log(item);
+  // console.log(item);
+  const { currUser } = useContext(AuthContext);
+  const [color, setColor] = useState("gray");
+
+  const handleLikeAgain = () => {
+    liked ? handleLike(item, -1) : handleLike(item, 1);
+    liked = !liked;
+    // console.log(liked);
+    liked ? setColor("red") : setColor("gray");
+  };
   return (
     <Card sx={{ width: "345px" }}>
-      <CardHeader title={item.title} subheader={item.postTime} />
+      <CardHeader
+        title={item.title}
+        subheader={`post by ${item.owner} on ${item.postTime}`}
+      />
       <CardMedia
         component="img"
         height="194"
@@ -26,10 +43,25 @@ const BlogCard = ({ item }) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <FavoriteIcon onClick={handleLikeAgain} style={{ color: color }} />
+          {item.likes && (
+            <Typography sx={{ marginLeft: "4px", fontWeight: "bold" }}>
+              {item.likes}
+            </Typography>
+          )}
         </IconButton>
         <IconButton aria-label="share">
-          <ShareIcon />
+          <CommentIcon />{" "}
+          {item.comments && (
+            <Typography sx={{ marginLeft: "4px", fontWeight: "bold" }}>
+              {item.comments}
+            </Typography>
+          )}
+        </IconButton>
+        <IconButton aria-label="share">
+          {currUser.displayName == item.owner && (
+            <DeleteIcon onClick={() => handleDelete(item.id)} />
+          )}
         </IconButton>
       </CardActions>
     </Card>

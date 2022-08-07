@@ -2,13 +2,16 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Container, TextField } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { addBlogPost } from "../../auth/firebase";
+import { AuthContext } from "../../auth/AuthContext";
 
 const InputCard = ({ post, setPost, postArr, setPostArr }) => {
   const [title, setTitle] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [content, setContent] = useState("");
+
+  const { currUser } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,8 +19,14 @@ const InputCard = ({ post, setPost, postArr, setPostArr }) => {
       (post.title = title),
       (post.imgUrl = imgUrl),
       (post.content = content),
-      (post.postTime = new Date().getDate()),
-      (post.blogId = new Date().getTime())
+      (post.postTime =
+        new Date().getMonth() +
+        "/" +
+        new Date().getDate() +
+        "/" +
+        new Date().getFullYear()),
+      (post.blogId = new Date().getTime()),
+      (post.owner = currUser.displayName)
     );
     // console.log(post);
     // setPostArr([post, ...postArr]);

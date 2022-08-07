@@ -10,7 +10,14 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  onValue,
+  remove,
+  update,
+} from "firebase/database";
 import { useEffect, useState } from "react";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -103,6 +110,9 @@ export const addBlogPost = (post) => {
     imgUrl: post.imgUrl,
     content: post.content,
     postTime: post.postTime,
+    owner: post.owner,
+    likes: post.likes,
+    comments: post.comments,
   });
 };
 
@@ -125,4 +135,17 @@ export const useFetchBlogPosts = () => {
     });
   }, []);
   return { loading, fetchedBlogs };
+};
+
+export const handleDelete = (id) => {
+  const db = getDatabase();
+  // const userRef = ref(db, "users/");
+  remove(ref(db, "blog/" + id));
+};
+
+export const handleLike = (post, like) => {
+  const db = getDatabase();
+  const updates = {};
+  updates[`/blog/${post.id}/likes/`] = post.likes + like;
+  return update(ref(db), updates);
 };

@@ -12,8 +12,11 @@ const Dashboard = () => {
     imgUrl: "",
     content: "",
     postTime: "",
+    owner: "",
+    likes: 1,
+    comments: [""],
   });
-  const [postArr, setPostArr] = useState();
+  // const [postArr, setPostArr] = useState();
   const { loading, fetchedBlogs } = useFetchBlogPosts();
   console.log(loading);
   console.log(fetchedBlogs);
@@ -28,6 +31,7 @@ const Dashboard = () => {
             setPost={setPost}
             // postArr={postArr}
             // setPostArr={setPostArr}
+            currUser={currUser}
           />
         </>
       )}
