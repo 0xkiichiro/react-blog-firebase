@@ -1,9 +1,10 @@
 import { ThemeProvider } from "@emotion/react";
+import { ToastContainer } from "react-toastify";
 import "./App.css";
 import AuthContextProvider from "./auth/AuthContext";
-import Navbar from "./components/navbar/Navbar";
 import AppRouter from "./router/AppRouter";
 import theme from "./theme/theme";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <AppRouter />
         </AuthContextProvider>
       </ThemeProvider>
+      <ToastContainer />
     </div>
   );
 }

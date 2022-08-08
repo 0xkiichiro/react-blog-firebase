@@ -71,7 +71,12 @@ const BlogDetail = () => {
             item.comments?.map((comment, index) => (
               <Typography
                 key={index}
-                sx={{ marginLeft: "4px", fontWeight: "bold" }}
+                sx={{
+                  fontWeight: "bold",
+                  textAlign: "start",
+                  marginTop: "1rem",
+                }}
+                style={{}}
               >
                 {comment}
               </Typography>

@@ -62,9 +62,9 @@ const BlogCard = ({ item }) => {
               navigate(`/details/${item.id}`, { state: item, liked })
             }
           />{" "}
-          {item.comments && (
+          {item.comments.length > 1 && (
             <Typography sx={{ marginLeft: "4px", fontWeight: "bold" }}>
-              {item.comments.length}
+              {item.comments.length - 1}
             </Typography>
           )}
         </IconButton>

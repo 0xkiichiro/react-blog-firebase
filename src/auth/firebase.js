@@ -19,6 +19,7 @@ import {
   update,
 } from "firebase/database";
 import { useEffect, useState } from "react";
+import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastConfig";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -50,8 +51,10 @@ export const createUser = async (email, password, navigate, displayName) => {
       displayName: displayName,
     });
     console.log(userCredential);
+    toastSuccessNotify("Success! New user created!");
     navigate("/");
   } catch (err) {
+    toastErrorNotify(err);
     console.log(err);
   }
 };
@@ -64,8 +67,10 @@ export const signIn = async (email, password, navigate) => {
       password
     );
     console.log(userCredential);
+    toastSuccessNotify("Welcome back!");
     navigate("/");
   } catch (err) {
+    toastErrorNotify(err);
     console.log(err);
   }
 };
@@ -76,8 +81,10 @@ export const signUpProvider = async (navigate) => {
     const provider = new GoogleAuthProvider();
     let userCredential = await signInWithPopup(auth, provider);
     console.log(userCredential);
+    toastSuccessNotify("Hello dear guest from google!");
     navigate("/");
   } catch (err) {
+    toastErrorNotify(err);
     console.log(err);
   }
 };
@@ -96,6 +103,7 @@ export const userObserver = (setCurrUser) => {
 export const logOut = (navigate) => {
   //? firebase method to logout
   signOut(auth);
+  toastSuccessNotify("Sad to see you go 🙁");
   navigate("/");
 };
 
@@ -114,6 +122,7 @@ export const addBlogPost = (post) => {
     likes: post.likes,
     comments: post.comments,
   });
+  toastSuccessNotify("New post!");
 };
 
 export const useFetchBlogPosts = () => {
@@ -141,6 +150,7 @@ export const handleDelete = (id) => {
   const db = getDatabase();
   // const userRef = ref(db, "users/");
   remove(ref(db, "blog/" + id));
+  toastSuccessNotify("We've deleted your post as you asked!");
 };
 
 export const handleLike = (post, like) => {
@@ -157,5 +167,6 @@ export const handleComment = (post, comment, user) => {
     `${user}: ${comment}`,
     ...post.comments,
   ];
+  toastSuccessNotify("New comment! Go to the mainpage to fetch!");
   return update(ref(db), updates);
 };

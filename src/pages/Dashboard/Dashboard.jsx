@@ -14,7 +14,7 @@ const Dashboard = () => {
     postTime: "",
     owner: "",
     likes: 1,
-    comments: ["baris: nice one m8"],
+    comments: [""],
   });
   // const [postArr, setPostArr] = useState();
   const { loading, fetchedBlogs } = useFetchBlogPosts();
