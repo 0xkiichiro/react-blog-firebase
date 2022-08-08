@@ -58,7 +58,7 @@ const Register = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: theme.colors.navBgColor }}>
+        <Avatar sx={{ m: 1 }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -123,7 +123,7 @@ const Register = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, backgroundColor: theme.colors.navBgColor }}
+            sx={{ mt: 3, mb: 2 }}
           >
             Sign Up
           </Button>
