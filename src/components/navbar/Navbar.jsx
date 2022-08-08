@@ -7,7 +7,6 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useContext, useEffect, useState } from "react";
-import theme from "../../theme/theme";
 import { AuthContext } from "../../auth/AuthContext";
 import { logOut } from "../../auth/firebase";
 import { Link, useNavigate } from "react-router-dom";
@@ -49,7 +48,7 @@ const Navbar = () => {
                 textDecoration: "none",
               }}
             >
-              JoJo Blog
+              <code>0xkiichiro's Blog</code>
             </Link>
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
