@@ -12,6 +12,8 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { handleDelete, handleLike } from "../../auth/firebase";
 import { useNavigate } from "react-router-dom";
+import { Button, TextField } from "@mui/material";
+import { Box } from "@mui/system";
 
 let liked = false;
 const BlogCard = ({ item }) => {
@@ -21,10 +23,12 @@ const BlogCard = ({ item }) => {
   const [color, setColor] = useState("gray");
 
   const handleLikeAgain = () => {
-    liked ? handleLike(item, -1) : handleLike(item, 1);
-    liked = !liked;
-    // console.log(liked);
-    liked ? setColor("red") : setColor("gray");
+    if (currUser) {
+      liked ? handleLike(item, -1) : handleLike(item, 1);
+      liked = !liked;
+      // console.log(liked);
+      liked ? setColor("red") : setColor("gray");
+    }
   };
   return (
     <Card sx={{ width: "345px" }}>
@@ -60,7 +64,7 @@ const BlogCard = ({ item }) => {
           />{" "}
           {item.comments && (
             <Typography sx={{ marginLeft: "4px", fontWeight: "bold" }}>
-              {item.comments}
+              {item.comments.length}
             </Typography>
           )}
         </IconButton>

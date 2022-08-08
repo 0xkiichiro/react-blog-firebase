@@ -14,12 +14,12 @@ const Dashboard = () => {
     postTime: "",
     owner: "",
     likes: 1,
-    comments: [""],
+    comments: ["baris: nice one m8"],
   });
   // const [postArr, setPostArr] = useState();
   const { loading, fetchedBlogs } = useFetchBlogPosts();
-  console.log(loading);
-  console.log(fetchedBlogs);
+  // console.log(loading);
+  // console.log(fetchedBlogs);
   // setPostArr(fetchedBlogs);
   return (
     <div>

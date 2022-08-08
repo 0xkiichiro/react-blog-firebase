@@ -149,3 +149,13 @@ export const handleLike = (post, like) => {
   updates[`/blog/${post.id}/likes/`] = post.likes + like;
   return update(ref(db), updates);
 };
+
+export const handleComment = (post, comment, user) => {
+  const db = getDatabase();
+  const updates = {};
+  updates[`/blog/${post.id}/comments/`] = [
+    `${user}: ${comment}`,
+    ...post.comments,
+  ];
+  return update(ref(db), updates);
+};

@@ -10,10 +10,16 @@ import CommentIcon from "@mui/icons-material/Comment";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../auth/AuthContext";
-import { handleDelete, handleLike } from "../../auth/firebase";
+import {
+  handleComment,
+  handleDelete,
+  handleLike,
+  useFetchBlogPosts,
+} from "../../auth/firebase";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Container } from "@mui/system";
+import { Box, Button, TextField } from "@mui/material";
 
 let liked = false;
 const BlogDetail = () => {
@@ -22,6 +28,7 @@ const BlogDetail = () => {
   const item = location.state;
   const { currUser } = useContext(AuthContext);
   const [color, setColor] = useState("gray");
+  const [comment, setComment] = useState({});
 
   const handleLikeAgain = () => {
     liked ? handleLike(item, -1) : handleLike(item, 1);
@@ -29,10 +36,17 @@ const BlogDetail = () => {
     // console.log(liked);
     liked ? setColor("red") : setColor("gray");
   };
+
+  const handleCommentSubmit = (e) => {
+    e.preventDefault();
+    // console.log(comment);
+    handleComment(item, comment, currUser.displayName);
+  };
+
   return (
     <Container
       sx={{
-        height: "100vh",
+        height: "80vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -53,31 +67,73 @@ const BlogDetail = () => {
           <Typography variant="body2" color="text.secondary">
             {item.content}
           </Typography>
+          {item.comments &&
+            item.comments?.map((comment, index) => (
+              <Typography
+                key={index}
+                sx={{ marginLeft: "4px", fontWeight: "bold" }}
+              >
+                {comment}
+              </Typography>
+            ))}
+          <Box component="form" sx={{ mt: 1 }} onSubmit={handleCommentSubmit}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="comment"
+              label="Comment"
+              name="comment"
+              autoComplete="comment"
+              autoFocus
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 2, mb: 2 }}
+            >
+              Comment
+            </Button>
+          </Box>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon onClick={handleLikeAgain} style={{ color: color }} />
-            {item.likes && (
-              <Typography sx={{ marginLeft: "4px", fontWeight: "bold" }}>
-                {item.likes}
-              </Typography>
-            )}
-          </IconButton>
-          <IconButton aria-label="share">
-            <CommentIcon
-              onClick={() => navigate(`/details/${item.id}`, { state: item })}
-            />{" "}
-            {item.comments && (
-              <Typography sx={{ marginLeft: "4px", fontWeight: "bold" }}>
-                {item.comments}
-              </Typography>
-            )}
-          </IconButton>
-          <IconButton aria-label="share">
-            {currUser.displayName == item.owner && (
-              <DeleteIcon onClick={() => handleDelete(item.id)} />
-            )}
-          </IconButton>
+        <CardActions
+          disableSpacing
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <div>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon
+                onClick={handleLikeAgain}
+                style={{ color: color }}
+              />
+              {item.likes && (
+                <Typography sx={{ marginLeft: "4px", fontWeight: "bold" }}>
+                  {item.likes}
+                </Typography>
+              )}
+            </IconButton>
+            <IconButton aria-label="share">
+              <CommentIcon
+                onClick={() => navigate(`/details/${item.id}`, { state: item })}
+              />{" "}
+            </IconButton>
+            <IconButton aria-label="share">
+              {currUser.displayName == item.owner && (
+                <DeleteIcon onClick={() => handleDelete(item.id)} />
+              )}
+            </IconButton>
+          </div>
+          <div>
+            <Button
+              variant="text"
+              sx={{ fontWeight: "bold" }}
+              onClick={() => navigate("/")}
+            >
+              Go Back
+            </Button>
+          </div>
         </CardActions>
       </Card>
     </Container>
