@@ -25,7 +25,9 @@ const Dashboard = () => {
     <div>
       {currUser && (
         <>
-          <Typography sx={{ mt: 3 }}>Welcome {currUser.displayName}</Typography>
+          <Typography sx={{ mt: 3, color: "white" }}>
+            Welcome {currUser.displayName}
+          </Typography>
           <InputCard
             post={post}
             setPost={setPost}

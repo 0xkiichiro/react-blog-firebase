@@ -164,8 +164,8 @@ export const handleComment = (post, comment, user) => {
   const db = getDatabase();
   const updates = {};
   updates[`/blog/${post.id}/comments/`] = [
-    `${user}: ${comment}`,
     ...post.comments,
+    `${user}: ${comment}`,
   ];
   toastSuccessNotify("New comment! Go to the mainpage to fetch!");
   return update(ref(db), updates);
