@@ -25,12 +25,12 @@ import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastConfig";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDNtZDx12ivhJZKPbLsyxDnnmfsTU0NV3M",
-  authDomain: "fir-blog-app-127d9.firebaseapp.com",
-  projectId: "fir-blog-app-127d9",
-  storageBucket: "fir-blog-app-127d9.appspot.com",
-  messagingSenderId: "323095258221",
-  appId: "1:323095258221:web:9fb0a63391595d103b0b64",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 // Initialize Firebase
