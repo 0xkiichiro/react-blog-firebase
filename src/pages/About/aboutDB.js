@@ -40,6 +40,19 @@ const aboutDB = [
     content:
       "React-Toastify allows you to add notifications to your app with ease. No more nonsense!",
   },
+  {
+    title: "Formik",
+    imgUrl: "https://formik.org/images/formik-og.png",
+    content:
+      "Formik is the world's most popular open source form library for React and React Native.",
+  },
+  {
+    title: "Yup",
+    imgUrl:
+      "https://i0.wp.com/scanskill.com/wp-content/uploads/2022/03/Form-validation-using-Formik-and-Yup-in-React.js.png",
+    content:
+      "Yup is a JavaScript schema builder for value parsing and validation. Define a schema, transform a value to match, validate the shape of an existing value, or both. Yup schema are extremely expressive and allow modeling complex, interdependent validations, or value transformations.",
+  },
 ];
 
 export default aboutDB;

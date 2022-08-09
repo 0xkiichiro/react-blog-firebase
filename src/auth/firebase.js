@@ -84,7 +84,7 @@ export const signUpProvider = async (navigate) => {
     toastSuccessNotify("Hello dear guest from google!");
     navigate("/");
   } catch (err) {
-    toastErrorNotify(err);
+    toastErrorNotify("There is a error");
     console.log(err);
   }
 };
