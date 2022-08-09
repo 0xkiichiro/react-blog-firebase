@@ -23,6 +23,8 @@ import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastConfig";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+console.log(process.env);
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
