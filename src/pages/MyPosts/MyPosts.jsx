@@ -13,7 +13,7 @@ const MyPosts = () => {
       <Box style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
         {fetchedBlogs?.map(
           (item, index) =>
-            item.owner == currUser.displayName && (
+            item.owner === currUser.displayName && (
               <BlogCard key={index} item={item} />
             )
         )}

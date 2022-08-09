@@ -8,7 +8,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUser } from "../../auth/firebase";
 import { Form, Formik } from "formik";
@@ -72,10 +71,6 @@ const Register = () => {
           }}
           validationSchema={schema}
           onSubmit={(values, actions) => {
-            alert(values.firstName);
-            alert(values.lastName);
-            alert(values.email);
-            alert(values.password);
             const displayName = `${values.firstName} ${values.lastName}`;
             createUser(values.email, values.password, navigate, displayName);
             actions.resetForm();

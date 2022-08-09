@@ -12,6 +12,8 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn, signUpProvider } from "../../auth/firebase";
 import { AuthContext } from "../../auth/AuthContext";
+import { Formik, Form } from "formik";
+import { schemaLogin } from "../../formValidation/schema";
 
 function Copyright(props) {
   return (
@@ -32,15 +34,15 @@ function Copyright(props) {
 }
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    signIn(email, password, navigate);
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   signIn(email, password, navigate);
+  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,53 +61,77 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Login
-          </Button>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            sx={{ mb: 2 }}
-            onClick={() => signUpProvider(navigate)}
-          >
-            Login with Google
-          </Button>
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={schemaLogin}
+          onSubmit={(values, actions) => {
+            console.log("oi");
+            signIn(values.email, values.password, navigate);
+            actions.resetForm();
+            actions.setSubmitting(false);
+          }}
+        >
+          {({ values, handleChange, touched, errors }) => (
+            <Form>
+              <Box sx={{ mt: 1 }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={values.email}
+                  onChange={handleChange}
+                  helperText={touched.email && errors.email}
+                  error={touched.email && Boolean(errors.email)}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  value={values.password}
+                  onChange={handleChange}
+                  helperText={touched.password && errors.password}
+                  error={touched.password && Boolean(errors.password)}
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Login
+                </Button>
+                <Button
+                  type="button"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mb: 2 }}
+                  onClick={() => signUpProvider(navigate)}
+                >
+                  Login with Google
+                </Button>
 
-          <Grid item xs>
-            {/* <Link to="register" variant="body2">
+                <Grid item xs>
+                  {/* <Link to="register" variant="body2">
               Don't have an account? Sign Up
             </Link> */}
-          </Grid>
-        </Box>
+                </Grid>
+              </Box>
+            </Form>
+          )}
+        </Formik>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
