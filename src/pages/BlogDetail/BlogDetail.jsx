@@ -15,7 +15,6 @@ import {
   handleDelete,
   handleLike,
   readPost,
-  useFetchBlogPosts,
 } from "../../auth/firebase";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -44,8 +43,11 @@ const BlogDetail = () => {
     currUser
       ? handleComment(item, comment, currUser.displayName)
       : handleComment(item, comment, "Anonymous Person");
-    const item = readPost(item.id);
+    const { post } = readPost(item.id);
+    console.log(post);
+    //TODO: can read post indv. but need to overwrite it on item via a state
   };
+
   return (
     <Container
       sx={{
