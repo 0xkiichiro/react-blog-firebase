@@ -4,6 +4,7 @@ import { AuthContext } from "../../auth/AuthContext";
 import { useFetchBlogPosts } from "../../auth/firebase";
 import BlogCard from "../../components/card/BlogCard";
 import InputCard from "../../components/input-card/InputCard";
+import Spinner from "../../assets/spinner-darkMode.gif";
 
 const Dashboard = () => {
   const { currUser } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const Dashboard = () => {
   });
   // const [postArr, setPostArr] = useState();
   const { loading, fetchedBlogs } = useFetchBlogPosts();
-  // console.log(loading);
+  console.log(loading);
   // console.log(fetchedBlogs);
   // setPostArr(fetchedBlogs);
   return (
@@ -46,9 +47,13 @@ const Dashboard = () => {
         }}
         style={{ gap: "2rem", textAlign: "center" }}
       >
-        {fetchedBlogs?.map((item, index) => (
-          <BlogCard key={index} item={item} />
-        ))}
+        {loading ? (
+          <img src={Spinner} alt="spinner"></img>
+        ) : (
+          fetchedBlogs?.map((item, index) => (
+            <BlogCard key={index} item={item} />
+          ))
+        )}
       </Box>
     </div>
   );

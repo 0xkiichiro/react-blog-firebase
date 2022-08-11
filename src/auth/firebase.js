@@ -17,13 +17,13 @@ import {
   onValue,
   remove,
   update,
+  get,
+  child,
 } from "firebase/database";
 import { useEffect, useState } from "react";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastConfig";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
-
-console.log(process.env);
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -171,4 +171,19 @@ export const handleComment = (post, comment, user) => {
   ];
   toastSuccessNotify("New comment! Go to the mainpage to fetch!");
   return update(ref(db), updates);
+};
+
+export const readPost = (postId) => {
+  const dbRef = ref(getDatabase());
+  get(child(dbRef, `blog/${postId}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };

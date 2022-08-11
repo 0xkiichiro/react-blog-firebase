@@ -9,10 +9,19 @@ export const schema = Yup.object().shape({
     .min(8)
     .max(16)
     .required()
-    .matches(/\d+/)
-    .matches(/[a-z]+/)
-    .matches(/[A-Z]+/)
-    .matches(/[!,?{}_><%&$#£+-.]+/),
+    .matches(/\d+/, "Your password should contain at least one number.")
+    .matches(
+      /[a-z]+/,
+      "Your password should contain at least one lowercase letter."
+    )
+    .matches(
+      /[A-Z]+/,
+      "Your password should contain at least one uppercase letter."
+    )
+    .matches(
+      /[!,?{}_><%&$#£+-.]+/,
+      "Your password should contain at least one special character."
+    ),
 });
 
 export const schemaLogin = Yup.object().shape({
@@ -21,8 +30,17 @@ export const schemaLogin = Yup.object().shape({
     .min(8)
     .max(16)
     .required()
-    .matches(/\d+/)
-    .matches(/[a-z]+/)
-    .matches(/[A-Z]+/)
-    .matches(/[!,?{}_><%&$#£+-.]+/),
+    .matches(/\d+/, "Your password should contain at least one number.")
+    .matches(
+      /[a-z]+/,
+      "Your password should contain at least one lowercase letter."
+    )
+    .matches(
+      /[A-Z]+/,
+      "Your password should contain at least one uppercase letter."
+    )
+    .matches(
+      /[!,?{}_><%&$#£+-.]+/,
+      "Your password should contain at least one special character."
+    ),
 });

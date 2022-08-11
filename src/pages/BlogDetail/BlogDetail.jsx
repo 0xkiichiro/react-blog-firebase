@@ -14,6 +14,7 @@ import {
   handleComment,
   handleDelete,
   handleLike,
+  readPost,
   useFetchBlogPosts,
 } from "../../auth/firebase";
 import { useNavigate } from "react-router-dom";
@@ -40,19 +41,22 @@ const BlogDetail = () => {
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     // console.log(comment);
-    handleComment(item, comment, currUser.displayName);
+    currUser
+      ? handleComment(item, comment, currUser.displayName)
+      : handleComment(item, comment, "Anonymous Person");
+    const item = readPost(item.id);
   };
-
   return (
     <Container
       sx={{
-        height: "80vh",
+        // height: "80vh",
+        marginTop: "2rem",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Card sx={{ width: "50%" }}>
+      <Card sx={{ width: "345px" }}>
         <CardHeader
           title={item.title}
           subheader={`post by ${item.owner} on ${item.postTime}`}

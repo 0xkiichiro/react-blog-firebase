@@ -12,8 +12,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { handleDelete, handleLike } from "../../auth/firebase";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from "@mui/material";
-import { Box } from "@mui/system";
+import { toastErrorNotify } from "../../helpers/toastConfig";
 
 let liked = false;
 const BlogCard = ({ item }) => {
@@ -28,6 +27,8 @@ const BlogCard = ({ item }) => {
       liked = !liked;
       // console.log(liked);
       liked ? setColor("red") : setColor("gray");
+    } else {
+      toastErrorNotify("Login first to like a post!");
     }
   };
   return (
